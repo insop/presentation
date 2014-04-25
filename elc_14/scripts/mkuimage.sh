@@ -16,7 +16,7 @@ else
 	NOTE="-$1"
 fi
 
-powerpc-linux-objcopy -O binary \
+${CROSS_COMPILE}objcopy -O binary \
                                  -R .note -R .comment \
                                  -S vmlinux linux.bin
 
