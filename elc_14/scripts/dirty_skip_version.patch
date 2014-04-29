@@ -1,0 +1,14 @@
+diff --git a/scripts/setlocalversion b/scripts/setlocalversion
+index bd6dca8..353fab9 100755
+--- a/scripts/setlocalversion
++++ b/scripts/setlocalversion
+@@ -168,7 +168,9 @@ else
+        # looks at signed or annotated tags - git tag -a/-s) and
+        # LOCALVERSION= is not specified
+        if test "${LOCALVERSION+set}" != "set"; then
+-           scm=$(scm_version --short)
++         # ISS skip plus
++         #scm=$(scm_version --short)
++         scm=""
+                res="$res${scm:++}"
+      
