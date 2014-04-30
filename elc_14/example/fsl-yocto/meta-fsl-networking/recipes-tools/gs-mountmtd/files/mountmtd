@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+FSTAB=/etc/fstab
+MTD_RFS=`cat /proc/cmdline | awk '{print $01}' | rev |cut -c1`
+NMTD_OPT=$(( MTD_RFS + 1 ))
+
+MTD_OPT="mtdblock${NMTD_OPT}"
+
+if ! [ -d /opt ]; then
+	mkdir -p /opt
+fi
+
+if [ `grep $MTD_OPT $FSTAB  | grep -c -v ^#`  -gt 0 ] ; then
+	echo $MTD_OPT is already mounted
+else
+	echo will mount $MTD_OPT
+	echo "/dev/$MTD_OPT       /opt                 jffs2      defaults,rw,noatime              0  0" >> $FSTAB
+fi
