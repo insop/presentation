@@ -1,0 +1,44 @@
+From d9a915a4e6f8dbfebffebe043b1d89ee4f542df0 Mon Sep 17 00:00:00 2001
+From: Insop Song <insop.song@gainspeed.com>
+Date: Fri, 21 Mar 2014 02:32:19 -0700
+Subject: [PATCH] Add non-default udp port support
+
+Signed-off-by: Insop Song <insop.song@gainspeed.com>
+---
+ syslogd.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/syslogd.c b/syslogd.c
+index acfd8f1..d6c2bf0 100644
+--- a/syslogd.c
++++ b/syslogd.c
+@@ -2550,6 +2550,8 @@ void cfline(line, f)
+ #endif
+ 	char buf[MAXLINE];
+ 	char xbuf[200];
++	char *t, port[10];
++
+ 
+ 	dprintf("cfline(%s)\n", line);
+ 
+@@ -2708,8 +2710,17 @@ void cfline(line, f)
+ 			break;
+ 		}
+ 
++		memset(port, 0, sizeof(port));
++		t = strchr(p+1, ':');
++		if(t != NULL) {
++			*t = '\0';
++			snprintf(port, sizeof(port), "%s", t+1);
++			LogPort = atoi(port);
++		}
++
+ 		(void) strcpy(f->f_un.f_forw.f_hname, ++p);
+ 		dprintf("forwarding host: %s\n", p);	/*ASP*/
++		dprintf("forwarding port: %d\n", LogPort);	/*ASP*/
+ 		if ( (hp = gethostbyname(p)) == NULL ) {
+ 			f->f_type = F_FORW_UNKN;
+ 			f->f_prevcount = INET_RETRY_MAX;
+-- 
+1.7.9.5
+
