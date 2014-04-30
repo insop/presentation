@@ -1,0 +1,6 @@
+#!/bin/sh
+#
+# so that it runs and opens up the port
+
+echo "init.d example"
+echo "add you init script to start app here"
