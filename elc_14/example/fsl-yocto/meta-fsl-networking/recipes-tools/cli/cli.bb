@@ -1,10 +1,4 @@
 #
-# Copyright (C) 2013 Gainspeed Inc.
-#
-# install wifi
-#
-# TODO: move this to meta-gainspeed
-# Update the license
 #
 
 DESCRIPTON = "CLI"
