@@ -1,0 +1,32 @@
+--- org/logrotate-3.8.1/examples/logrotate-default	2014-01-14 21:06:11.780165721 -0800
++++ logrotate-3.8.1/examples/logrotate-default	2014-01-14 21:06:40.824164692 -0800
+@@ -12,7 +12,7 @@
+ dateext
+ 
+ # uncomment this if you want your log files compressed
+-#compress
++compress
+ 
+ # RPM packages drop log rotation information into this directory
+ include /etc/logrotate.d
+@@ -33,3 +33,27 @@
+ }
+ 
+ # system-specific logs may be also be configured here.
++/var/log/messages {
++   size 100k
++   create 0664 root utmp
++   rotate 20   
++   postrotate
++                             /usr/bin/killall -HUP syslogd
++   endscript             
++}
++
++/var/log/syslog {                                     
++   size 100k       
++   create 0664 root utmp
++   rotate 20            
++   postrotate
++                             /usr/bin/killall -HUP syslogd
++   endscript                                              
++}          
